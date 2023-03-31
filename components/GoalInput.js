@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Button, Modal, StyleSheet, TextInput, View } from 'react-native';
+import { Button, Image, Modal, StyleSheet, TextInput, View } from 'react-native';
 import { useState } from 'react';
 
 const styles = StyleSheet.create({
@@ -11,22 +11,30 @@ const styles = StyleSheet.create({
     gap: 8,
     marginTop: 16,
   },
+  goalImage: {
+    width: 100,
+    height: 100,
+    margin: 20,
+  },
   inputContainer: {
     alignItems: 'center',
-    // borderBottomColor: '#CCC',
-    // borderBottomWidth: 1,
+    backgroundColor: '#311B6B',
     flex: 1,
     justifyContent: 'center',
-    // marginBottom: 24,
     padding: 16,
   },
   textInput: {
-    borderColor: '#CCC',
+    backgroundColor: '#E4D0FF',
+    borderColor: '#E4D0FF',
+    borderRadius: 6,
     borderWidth: 1,
-    padding: 8,
+    color: '#120438',
+    padding: 16,
     width: '100%',
   },
 });
+
+const goalImageImport = require('../assets/images/goal.png');
 
 function GoalInput({ modalIsVisible, onAdd, onCancel }) {
   const [enteredGoal, setEnteredGoal] = useState('');
@@ -41,6 +49,7 @@ function GoalInput({ modalIsVisible, onAdd, onCancel }) {
   return (
     <Modal animationType="slide" visible={modalIsVisible}>
       <View style={styles.inputContainer}>
+        <Image source={goalImageImport} style={styles.goalImage} />
         <TextInput
           onChangeText={goalInputHandler}
           placeholder="Your course goal..."
@@ -49,10 +58,10 @@ function GoalInput({ modalIsVisible, onAdd, onCancel }) {
         />
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
-            <Button onPress={onCancel} title="Cancel" />
+            <Button color="#F31282" onPress={onCancel} title="Cancel" />
           </View>
           <View style={styles.buttonContainer}>
-            <Button onPress={addGoalHandler} title="Add Goal" />
+            <Button color="#B180F0" onPress={addGoalHandler} title="Add Goal" />
           </View>
         </View>
       </View>
