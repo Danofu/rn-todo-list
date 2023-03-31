@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import { Button, Modal, StyleSheet, TextInput, View } from 'react-native';
 import { useState } from 'react';
 
 const styles = StyleSheet.create({
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function GoalInput({ onAdd }) {
+function GoalInput({ modalIsVisible, onAdd }) {
   const [enteredGoal, setEnteredGoal] = useState('');
 
   const goalInputHandler = (textValue) => setEnteredGoal(textValue);
@@ -32,23 +32,27 @@ function GoalInput({ onAdd }) {
   };
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        onChangeText={goalInputHandler}
-        placeholder="Your course goal..."
-        style={styles.textInput}
-        value={enteredGoal}
-      />
-      <Button onPress={addGoalHandler} title="Add Goal" />
-    </View>
+    <Modal animationType="slide" visible={modalIsVisible}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={goalInputHandler}
+          placeholder="Your course goal..."
+          style={styles.textInput}
+          value={enteredGoal}
+        />
+        <Button onPress={addGoalHandler} title="Add Goal" />
+      </View>
+    </Modal>
   );
 }
 
 GoalInput.propTypes = {
+  modalIsVisible: PropTypes.bool,
   onAdd: PropTypes.func,
 };
 
 GoalInput.defaultProps = {
+  modalIsVisible: false,
   onAdd: () => {},
 };
 
