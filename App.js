@@ -19,24 +19,27 @@ function App() {
   const [goals, setGoals] = useState([]);
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
+  const endAddGoalHandler = () => setModalIsVisible(false);
+
   const startAddGoalHandler = () => setModalIsVisible(true);
 
-  const addGoalHandler = (goalText) =>
+  const addGoalHandler = (goalText) => {
     setGoals((prevGoals) => [{ id: Math.random().toString(), text: goalText }, ...prevGoals]);
+    endAddGoalHandler();
+  };
 
   const deleteGoalHandler = (goalId) => setGoals((prevGoals) => prevGoals.filter((goal) => goal.id !== goalId));
 
   return (
     <View style={styles.appContainer}>
       <Button color="#5E0ACC" onPress={startAddGoalHandler} title="Add New Goal" />
-      <GoalInput modalIsVisible={modalIsVisible} onAdd={addGoalHandler} />
+      <GoalInput modalIsVisible={modalIsVisible} onAdd={addGoalHandler} onCancel={endAddGoalHandler} />
       <View style={styles.goalsContainer}>
         <FlatList
           alwaysBounceVertical={false}
           data={goals}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <GoalItem id={item.id} onDelete={deleteGoalHandler} text={item.text} />}
-          style={{ paddingEnd: 10 }}
         />
       </View>
     </View>
