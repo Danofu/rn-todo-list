@@ -1,14 +1,34 @@
-import {Button, StyleSheet, TextInput, View} from "react-native";
-import {useState} from "react";
+import PropTypes from 'prop-types';
+import { Button, StyleSheet, TextInput, View } from 'react-native';
+import { useState } from 'react';
 
-const GoalInput = (props) => {
-  const [enteredGoal, setEnteredGoal] = useState("");
+const styles = StyleSheet.create({
+  inputContainer: {
+    alignItems: 'center',
+    borderBottomColor: '#CCC',
+    borderBottomWidth: 1,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 24,
+  },
+  textInput: {
+    borderColor: '#CCC',
+    borderWidth: 1,
+    marginRight: 8,
+    padding: 8,
+    width: '70%',
+  },
+});
+
+function GoalInput({ onAdd }) {
+  const [enteredGoal, setEnteredGoal] = useState('');
 
   const goalInputHandler = (textValue) => setEnteredGoal(textValue);
 
   const addGoalHandler = () => {
-    props.onAdd(enteredGoal);
-    setEnteredGoal("");
+    onAdd(enteredGoal);
+    setEnteredGoal('');
   };
 
   return (
@@ -19,28 +39,17 @@ const GoalInput = (props) => {
         style={styles.textInput}
         value={enteredGoal}
       />
-      <Button onPress={addGoalHandler} title="Add Goal"/>
+      <Button onPress={addGoalHandler} title="Add Goal" />
     </View>
   );
+}
+
+GoalInput.propTypes = {
+  onAdd: PropTypes.func,
 };
 
-const styles = StyleSheet.create({
-  inputContainer: {
-    alignItems: "center",
-    borderBottomColor: "#CCC",
-    borderBottomWidth: 1,
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 24,
-  },
-  textInput: {
-    borderColor: "#CCC",
-    borderWidth: 1,
-    marginRight: 8,
-    padding: 8,
-    width: "70%",
-  },
-});
+GoalInput.defaultProps = {
+  onAdd: () => {},
+};
 
 export default GoalInput;
