@@ -22,6 +22,8 @@ function App() {
     setGoals((prevGoals) => [{ id: Math.random().toString(), text: goalText }, ...prevGoals]);
   };
 
+  const deleteGoalHandler = (goalId) => setGoals((prevGoals) => prevGoals.filter((goal) => goal.id !== goalId));
+
   return (
     <View style={styles.appContainer}>
       <GoalInput onAdd={addGoalHandler} />
@@ -30,7 +32,7 @@ function App() {
           alwaysBounceVertical={false}
           data={goals}
           keyExtractor={(item) => item.id}
-          renderItem={(itemData) => <GoalItem text={itemData.item.text} />}
+          renderItem={({ item }) => <GoalItem id={item.id} onDelete={deleteGoalHandler} text={item.text} />}
           style={{ paddingEnd: 10 }}
         />
       </View>
